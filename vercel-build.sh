@@ -4,14 +4,10 @@
 git clone https://github.com/flutter/flutter.git -b stable
 export PATH="$PATH:$HOME/flutter/bin"
 
-# Verify Flutter installation
-flutter --version
-
-# Enable web support
+# Setup Flutter
+flutter precache
 flutter config --enable-web
 
-# Get dependencies
+# Get dependencies and build
 flutter pub get
-
-# Build web version
 flutter build web --release
