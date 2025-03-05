@@ -1,5 +1,5 @@
-# Use the official Flutter image as a base
-FROM ghcr.io/cirruslabs/flutter:3.16.3 AS build
+# Use the latest Flutter image
+FROM ghcr.io/cirruslabs/flutter:latest AS build
 
 # Set working directory
 WORKDIR /app
