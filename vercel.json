@@ -1,0 +1,9 @@
+{
+    "buildCommand": "flutter pub get && flutter build web",
+    "devCommand": "flutter run -d web-server",
+    "outputDirectory": "build/web",
+    "framework": "flutter",
+    "rewrites": [
+      { "source": "/(.*)", "destination": "/index.html" }
+    ]
+  }
