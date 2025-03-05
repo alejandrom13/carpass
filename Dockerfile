@@ -1,47 +1,27 @@
-# Use an official Flutter image with Dart 3.6.1
-FROM cirrusci/flutter:3.16.9
+# Use the official Flutter image as a base
+FROM ghcr.io/cirruslabs/flutter:3.16.3 AS build
 
 # Set working directory
 WORKDIR /app
 
-# Install necessary dependencies
-RUN apt-get update && apt-get install -y \
-    curl \
-    git \
-    unzip \
-    xz-utils \
-    zip \
-    libglu1-mesa \
-    libstdc++6 \
-    fonts-droid-fallback
+# Copy the pubspec files and resolve dependencies
+COPY pubspec.yaml pubspec.lock ./
+RUN flutter pub get
 
-# Set up environment variables
-ENV PATH="/usr/local/flutter/bin:${PATH}"
-
-# Copy pubspec files first to leverage Docker cache
-COPY pubspec.yaml pubspec.lock* ./
-
-# Enable null safety and get dependencies
-RUN dart --enable-experiment=default-code-style-2024 \
-    && flutter pub get
-
-# Copy the rest of the project files
+# Copy the rest of the app source code
 COPY . .
 
-# Generate necessary files (if any)
-RUN flutter pub run build_runner build --delete-conflicting-outputs
+# Build the Flutter web app
+RUN flutter build web --release
 
-# Build the app for web
-RUN flutter build web
-
-# Use nginx to serve the web app
+# Use an Nginx image to serve the built Flutter app
 FROM nginx:alpine
 
-# Copy built web files to nginx html directory
-COPY --from=0 /app/build/web /usr/share/nginx/html
+# Copy the built Flutter web app to Nginx's web root
+COPY --from=build /app/build/web /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
 
-# Default command to run nginx
+# Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
