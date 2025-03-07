@@ -1,7 +1,6 @@
 import 'package:carpass/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 enum InputType { number, email, defaultInput, password }

@@ -30,17 +30,22 @@ class ProfilePage extends ConsumerWidget {
                     color: Color.fromRGBO(232, 232, 232, 1),
                   ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.sizeOf(context).width * 0.1,
-                      child: CircleAvatar(
-                        radius: 25,
+                child: user.when(
+                  data: (data) => Row(
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.sizeOf(context).width * 0.1,
+                        child: CircleAvatar(
+                          backgroundImage: data.image == null
+                              ? AssetImage('assets/carpass.png')
+                              : NetworkImage(data.image!),
+                          radius: 25,
+                        ),
                       ),
-                    ),
-                    user.when(
-                      data: (data) => SizedBox(
+                      SizedBox(
+                        width: 20,
+                      ),
+                      SizedBox(
                         width: MediaQuery.sizeOf(context).width * 0.72,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -69,10 +74,10 @@ class ProfilePage extends ConsumerWidget {
                           ],
                         ),
                       ),
-                      error: (error, stackTrace) => SizedBox.shrink(),
-                      loading: () => SizedBox.shrink(),
-                    ),
-                  ],
+                    ],
+                  ),
+                  error: (error, stackTrace) => SizedBox.shrink(),
+                  loading: () => SizedBox.shrink(),
                 ),
               ),
               SizedBox(height: 20),

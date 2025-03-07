@@ -9,6 +9,7 @@ import 'package:carpass/theme/button.dart';
 import 'package:carpass/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 class VehicleView extends ConsumerStatefulWidget {
@@ -74,7 +75,6 @@ class _VehicleViewState extends ConsumerState<VehicleView> {
                           ),
                         ),
                       );
-                return null;
               },
               error: (_, __) => SizedBox.shrink(),
               loading: () => SizedBox.shrink()),
@@ -84,6 +84,11 @@ class _VehicleViewState extends ConsumerState<VehicleView> {
               'Reporte',
               style: textTheme.displayMedium,
             ),
+            leading: IconButton(
+                onPressed: () {
+                  context.go('/home');
+                },
+                icon: Icon(Icons.arrow_back)),
             actions: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -165,7 +170,7 @@ class _VehicleViewState extends ConsumerState<VehicleView> {
                                             ? Image.network(
                                                 vehicle.$1!.imageUrl ?? '')
                                             : Image.asset(
-                                                'assets/toyota.png',
+                                                'assets/carpass.png',
                                               ),
                                       ),
                                       const SizedBox(height: 16),
@@ -191,8 +196,7 @@ class _VehicleViewState extends ConsumerState<VehicleView> {
                                               style: textTheme.bodyMedium
                                                   ?.copyWith(
                                                 color: Theme.of(context)
-                                                    .colorScheme
-                                                    .outline,
+                                                    .disabledColor,
                                               ),
                                             ),
                                             SizedBox(width: 5),

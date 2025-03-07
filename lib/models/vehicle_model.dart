@@ -47,8 +47,7 @@ class VehicleModel {
       plantCountry: json['plantCountry'] ?? '',
       plantCity: json['plantCity'] ?? '',
       isUnlock: json['hasReport'] ?? false,
-      imageUrl: json['imageUrl'] ??
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfV0rVNz-kjE3fZ0AfSowXgs1Z47BuSP7ZOQ&s',
+      imageUrl: json['imageUrl'],
     );
   }
 

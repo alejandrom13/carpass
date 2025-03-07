@@ -93,24 +93,22 @@ class VehicleList extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(20),
                         side: BorderSide(color: Colors.transparent)),
                     backgroundColor: Color.fromRGBO(243, 243, 243, 1),
-                    label: Expanded(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Marca',
-                            style: GoogleFonts.dmSans(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black),
-                          ),
-                          Icon(
-                            Icons.expand_more_rounded,
-                            size: 20,
-                          ),
-                        ],
-                      ),
+                    label: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Marca',
+                          style: GoogleFonts.dmSans(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black),
+                        ),
+                        Icon(
+                          Icons.expand_more_rounded,
+                          size: 20,
+                        ),
+                      ],
                     )),
                 SizedBox(width: 10),
                 Chip(
@@ -118,24 +116,22 @@ class VehicleList extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(20),
                         side: BorderSide(color: Colors.transparent)),
                     backgroundColor: Color.fromRGBO(243, 243, 243, 1),
-                    label: Expanded(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Año',
-                            style: GoogleFonts.dmSans(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black),
-                          ),
-                          Icon(
-                            Icons.expand_more_rounded,
-                            size: 20,
-                          ),
-                        ],
-                      ),
+                    label: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Año',
+                          style: GoogleFonts.dmSans(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black),
+                        ),
+                        Icon(
+                          Icons.expand_more_rounded,
+                          size: 20,
+                        ),
+                      ],
                     )),
               ],
             ),
@@ -181,8 +177,7 @@ class VehicleList extends ConsumerWidget {
                         model: 'Corolla',
                         year: 2010,
                         vin: 'KM8J33A46KU040279',
-                        imageUrl:
-                            'https://global.toyota/pages/global_toyota/mobility/toyota-brand/emblem_001.jpg',
+                        imageUrl: null,
                       ),
                     ),
                   ),
@@ -209,8 +204,9 @@ class VehicleList extends ConsumerWidget {
           border: Border.all(color: Color.fromRGBO(232, 232, 232, 1)),
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Image.network(model.imageUrl ??
-            'https://global.toyota/pages/global_toyota/mobility/toyota-brand/emblem_001.jpg'),
+        child: model.imageUrl == null
+            ? Image.asset('assets/carpass.png')
+            : Image.network(model.imageUrl!),
       ),
       title: Text('${model.brand} ${model.model} ${model.year}'.toUpperCase(),
           style: GoogleFonts.dmSans(
@@ -220,30 +216,27 @@ class VehicleList extends ConsumerWidget {
       subtitle: Text(model.vin.toUpperCase(),
           style: GoogleFonts.dmSans(
               fontSize: 11, color: Color.fromRGBO(75, 75, 75, 1))),
-      trailing: SizedBox(
-        // width: 80,
-        child: ElevatedButton.icon(
-          onPressed: () {
-            ref.read(vehicleProvider.notifier).getById(model.id);
-            context.go('/vehicle/view/${model.id}');
-          },
-          style: ElevatedButton.styleFrom(
-            splashFactory: NoSplash.splashFactory,
-            backgroundColor: Color.fromRGBO(243, 243, 243, 1),
-            // primary: Color.fromRGBO(0, 0, 0, 1),
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
+      trailing: ElevatedButton.icon(
+        onPressed: () {
+          ref.read(vehicleProvider.notifier).getById(model.id);
+          context.go('/vehicle/view/${model.id}');
+        },
+        style: ElevatedButton.styleFrom(
+          splashFactory: NoSplash.splashFactory,
+          backgroundColor: Color.fromRGBO(243, 243, 243, 1),
+          // primary: Color.fromRGBO(0, 0, 0, 1),
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
           ),
-          label: Text('Ver',
-              style: GoogleFonts.dmSans(
-                color: Colors.black,
-                fontWeight: FontWeight.w600,
-                fontSize: 14,
-              )),
-          icon: Icon(CustomIcons.eye, color: Colors.black),
         ),
+        label: Text('Ver',
+            style: GoogleFonts.dmSans(
+              color: Colors.black,
+              fontWeight: FontWeight.w600,
+              fontSize: 14,
+            )),
+        icon: Icon(CustomIcons.eye, color: Colors.black),
       ),
     );
   }
