@@ -1,4 +1,3 @@
-import 'package:carpass/config/enviroment.dart';
 import 'package:carpass/features/auth/providers/auth_provider.dart';
 import 'package:carpass/models/auth/auth.dart';
 import 'package:carpass/services/token_service.dart';
@@ -29,9 +28,9 @@ class GoRouterNotifier extends ChangeNotifier {
   }
 
   getoken() async {
-    // TokenService service = TokenService();
-    // var token = await service.getToken();
-    if (Enviroment.accessToken.isNotEmpty) {
+    TokenService service = TokenService();
+    var token = await service.getToken();
+    if (token!.accessToken.isNotEmpty) {
       authStatus = AuthStatus.authenticated;
     } else {
       authStatus = AuthStatus.checking;

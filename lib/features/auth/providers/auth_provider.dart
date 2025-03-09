@@ -69,7 +69,10 @@ class ValidateNotifier
   void verify({required String code}) async {
     loginForm.markAllAsTouched();
     if (loginForm.invalid || code.isEmpty) {
-      return;
+      var errorObject = {
+        'message': 'Por favor, ingrese un código válido',
+      };
+      state = AsyncValue.error(errorObject, StackTrace.current);
     }
     state = const AsyncValue.loading();
     var model = AuthModel(
