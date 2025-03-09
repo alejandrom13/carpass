@@ -1,36 +1,25 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class TokenService implements ITokenService {
   final storage = const FlutterSecureStorage();
 
   @override
   Future<Token?> getToken() async {
-    return null;
+    var accessToken = await storage.read(key: 'accessToken') ?? '';
+    var refreshToken = await storage.read(key: 'refreshToken') ?? '';
 
-    // final SharedPreferences prefs = await SharedPreferences.getInstance();
-    // prefs.getString('accessToken');
-    // var accessToken = prefs.getString(
-    //     'accessToken'); //await storage.read(key: 'accessToken') ?? '';
-    // var refreshToken = prefs.getString(
-    //     'refreshToken'); // await storage.read(key: 'refreshToken') ?? '';
-
-    // var tokens = Token(
-    //   accessToken: accessToken!,
-    //   refreshToken: refreshToken!,
-    // );
-    // return tokens;
+    var tokens = Token(
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+    );
+    return tokens;
   }
 
   @override
   Future<void> setToken(Token tokens) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('accessToken', tokens.accessToken);
-    await prefs.setString('refreshToken', tokens.refreshToken!);
-
-    // await storage.write(key: 'accessToken', value: tokens.accessToken);
-    // await storage.write(key: 'userId', value: tokens.userId.toString());
-    // await storage.write(key: 'refreshToken', value: tokens.refreshToken);
+    await storage.write(key: 'accessToken', value: tokens.accessToken);
+    await storage.write(key: 'userId', value: tokens.userId.toString());
+    await storage.write(key: 'refreshToken', value: tokens.refreshToken);
     // var expirationTime =
     //     DateTime.now().add(Duration(seconds: tokens.expireIn!));
 

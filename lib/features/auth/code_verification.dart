@@ -108,7 +108,13 @@ class _CodeVerificationState extends ConsumerState<CodeVerification> {
                       .read(validateProvider.notifier)
                       .verify(code: codeController.text);
                 },
-                // onChanged: onChanged,
+                onChanged: (value) {
+                  if (value.length == 6) {
+                    ref
+                        .read(validateProvider.notifier)
+                        .verify(code: codeController.text);
+                  }
+                },
                 beforeTextPaste: (text) {
                   debugPrint("Allowing to paste $text");
                   return true;
