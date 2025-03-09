@@ -6,18 +6,20 @@ class TokenService implements ITokenService {
 
   @override
   Future<Token?> getToken() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.getString('accessToken');
-    var accessToken = prefs.getString(
-        'accessToken'); //await storage.read(key: 'accessToken') ?? '';
-    var refreshToken = prefs.getString(
-        'refreshToken'); // await storage.read(key: 'refreshToken') ?? '';
+    return null;
 
-    var tokens = Token(
-      accessToken: accessToken!,
-      refreshToken: refreshToken!,
-    );
-    return tokens;
+    // final SharedPreferences prefs = await SharedPreferences.getInstance();
+    // prefs.getString('accessToken');
+    // var accessToken = prefs.getString(
+    //     'accessToken'); //await storage.read(key: 'accessToken') ?? '';
+    // var refreshToken = prefs.getString(
+    //     'refreshToken'); // await storage.read(key: 'refreshToken') ?? '';
+
+    // var tokens = Token(
+    //   accessToken: accessToken!,
+    //   refreshToken: refreshToken!,
+    // );
+    // return tokens;
   }
 
   @override

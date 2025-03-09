@@ -1,3 +1,4 @@
+import 'package:carpass/config/enviroment.dart';
 import 'package:carpass/models/auth/auth.dart';
 import 'package:carpass/models/auth/login.dart';
 import 'package:carpass/models/auth/user.dart';
@@ -40,13 +41,9 @@ class AuthRepository {
 
     return await _api.post(currentUrl, user.toJson()).then((value) async {
       if (value.statusCode! >= 200 && value.statusCode! < 300) {
-        ITokenService tokenService = TokenService();
-        Token tokens = Token(
-          accessToken: value.data['accessToken'],
-          refreshToken: value.data['refreshToken'],
-        );
-
-        await tokenService.setToken(tokens);
+        // ITokenService tokenService = TokenService();
+        Enviroment.accessToken = value.data['accessToken'];
+        // await tokenService.setToken(tokens);
         return CustomResponse(
           success: true,
           data: User.fromJson(value.data),

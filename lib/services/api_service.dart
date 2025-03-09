@@ -17,7 +17,7 @@ class IntegrationAPI {
       onRequest: (options, handler) async {
         var token = await tokenService.getToken();
         if (token != null) {
-          options.headers['Authorization'] = 'Bearer ${token.accessToken}';
+          options.headers['Authorization'] = 'Bearer ${Enviroment.accessToken}';
         }
         return handler.next(options);
       },
