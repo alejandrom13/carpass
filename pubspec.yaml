@@ -46,6 +46,7 @@ dependencies:
   skeletonizer: ^1.4.3
   shared_preferences: ^2.5.2
 
+  intl: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

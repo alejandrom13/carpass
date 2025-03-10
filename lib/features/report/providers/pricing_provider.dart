@@ -60,8 +60,9 @@ class CreditsNotifier extends StateNotifier<AsyncValue<CurrentState>> {
 
         if (mounted) state = AsyncValue.data(CurrentState.success);
       } else {
-        if (mounted)
+        if (mounted) {
           state = AsyncValue.error(response.message!, StackTrace.current);
+        }
       }
     });
   }

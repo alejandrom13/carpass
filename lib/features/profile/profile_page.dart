@@ -1,3 +1,4 @@
+import 'package:carpass/features/auth/providers/auth_provider.dart';
 import 'package:carpass/features/report/providers/user_provider.dart';
 import 'package:carpass/features/report/unlock-report/unlock_report.dart';
 import 'package:carpass/models/option_model.dart';
@@ -125,25 +126,33 @@ class ProfilePage extends ConsumerWidget {
               Column(
                 children: List.generate(options.length, (index) {
                   return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                     child: InkWell(
-                      child: Row(
-                        children: [
-                          Icon(
-                            options[index].icon,
-                            color: options[index].iconColor ??
-                                theme.colorScheme.onPrimaryContainer,
-                          ),
-                          SizedBox(width: 15),
-                          Text(
-                            options[index].title,
-                            style: textTheme.labelLarge!.copyWith(
-                                fontFamily: 'Inter',
-                                color: options[index].iconColor ??
-                                    Color.fromRGBO(40, 40, 40, 1),
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ],
+                      onTap: () {
+                        if (options[index].action != null) {
+                          options[index].action!(ref);
+                        }
+                      },
+                      child: SizedBox(
+                        height: 60,
+                        child: Row(
+                          children: [
+                            Icon(
+                              options[index].icon,
+                              color: options[index].iconColor ??
+                                  theme.colorScheme.onPrimaryContainer,
+                            ),
+                            SizedBox(width: 15),
+                            Text(
+                              options[index].title,
+                              style: textTheme.labelLarge!.copyWith(
+                                  fontFamily: 'Inter',
+                                  color: options[index].iconColor ??
+                                      Color.fromRGBO(40, 40, 40, 1),
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );
@@ -183,5 +192,8 @@ List<Option> options = [
     title: 'Cerrar Sesión',
     iconColor: Color.fromRGBO(246, 91, 91, 1),
     value: 0,
+    action: (ref) {
+      ref.read(authProvider.notifier).logout();
+    },
   ),
 ];

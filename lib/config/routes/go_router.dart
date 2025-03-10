@@ -1,6 +1,7 @@
 import 'package:carpass/config/routes/router_notifier.dart';
 import 'package:carpass/features/auth/code_verification.dart';
 import 'package:carpass/features/auth/login.dart';
+import 'package:carpass/features/auth/sign_up.dart';
 import 'package:carpass/features/report/vehicle-list/vehicle_list.dart';
 import 'package:carpass/features/report/vehicle-view/vehicle_view.dart';
 import 'package:carpass/models/auth/auth.dart';
@@ -37,6 +38,10 @@ var mainRouter = Provider((ref) {
         path: '/auth',
         builder: (context, state) => const LoginPage(),
         routes: [
+          GoRoute(
+            path: 'signup',
+            builder: (context, state) => const SignUpPage(),
+          ),
           GoRoute(
             path: 'verify',
             builder: (context, state) => const CodeVerification(),

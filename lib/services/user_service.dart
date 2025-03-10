@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class IUserService {
   Future<LoginModel> getUser();
-  setLoginUser({required String email});
+  setLoginUser({required String email, String? name});
   setUser(User model);
   Future<User> getUserInfo();
 }
@@ -13,9 +13,10 @@ class UserService extends IUserService {
   final storage = const FlutterSecureStorage();
 
   @override
-  setLoginUser({required String email}) async {
+  setLoginUser({required String email, String? name}) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('email', email.toString());
+    await prefs.setString('name', email.toString());
   }
 
   @override
@@ -30,7 +31,9 @@ class UserService extends IUserService {
   }
 
   deleteUser() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     await storage.deleteAll();
+    await prefs.clear();
   }
 
   @override

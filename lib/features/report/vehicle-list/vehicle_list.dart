@@ -19,7 +19,9 @@ class VehicleList extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        forceMaterialTransparency: true,
         centerTitle: true,
         title: Image.asset('assets/logo.png', height: 25),
         actions: [
@@ -88,12 +90,14 @@ class VehicleList extends ConsumerWidget {
             SizedBox(height: 10),
             Row(
               children: [
-                Chip(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        side: BorderSide(color: Colors.transparent)),
-                    backgroundColor: Color.fromRGBO(243, 243, 243, 1),
-                    label: Row(
+                Container(
+                    height: 40,
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Color.fromRGBO(243, 243, 243, 1),
+                    ),
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -111,12 +115,14 @@ class VehicleList extends ConsumerWidget {
                       ],
                     )),
                 SizedBox(width: 10),
-                Chip(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        side: BorderSide(color: Colors.transparent)),
-                    backgroundColor: Color.fromRGBO(243, 243, 243, 1),
-                    label: Row(
+                Container(
+                    height: 40,
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Color.fromRGBO(243, 243, 243, 1),
+                    ),
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -200,12 +206,14 @@ class VehicleList extends ConsumerWidget {
         width: 60,
         height: 60,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.transparent,
           border: Border.all(color: Color.fromRGBO(232, 232, 232, 1)),
           borderRadius: BorderRadius.circular(8),
         ),
         child: model.imageUrl == null
-            ? Image.asset('assets/carpass.png')
+            ? Image.asset(
+                'assets/carpass.png',
+              )
             : Image.network(model.imageUrl!),
       ),
       title: Text('${model.brand} ${model.model} ${model.year}'.toUpperCase(),

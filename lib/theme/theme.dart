@@ -14,6 +14,11 @@ class CustomTheme {
       disabledColor: const Color.fromARGB(255, 181, 181, 182),
       shadowColor: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.1),
       splashColor: Colors.transparent,
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        iconTheme: IconThemeData(color: Colors.black),
+      ),
       primaryColor: _primaryColor,
       scaffoldBackgroundColor: Colors.white,
       textTheme: TextTheme(

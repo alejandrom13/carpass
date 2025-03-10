@@ -27,8 +27,17 @@ class _CodeVerificationState extends ConsumerState<CodeVerification> {
   @override
   Widget build(BuildContext context) {
     var validate = ref.watch(validateProvider);
+    final timeLeft = ref.watch(countdownProvider);
+    final isResendEnabled = ref.watch(isResendEnabledProvider);
+
+    String formatDuration(Duration duration) {
+      String twoDigits(int n) => n.toString().padLeft(2, "0");
+      String minutes = twoDigits(duration.inMinutes.remainder(60));
+      String seconds = twoDigits(duration.inSeconds.remainder(60));
+      return "$minutes:$seconds";
+    }
+
     codeController.text = '';
-    // errorController.add(ErrorAnimationType.shake);
 
     return Scaffold(
       appBar: AppBar(
@@ -103,11 +112,11 @@ class _CodeVerificationState extends ConsumerState<CodeVerification> {
                 errorAnimationController: errorController,
                 controller: codeController,
                 keyboardType: TextInputType.number,
-                onCompleted: (v) {
-                  ref
-                      .read(validateProvider.notifier)
-                      .verify(code: codeController.text);
-                },
+                // onCompleted: (v) {
+                //   ref
+                //       .read(validateProvider.notifier)
+                //       .verify(code: codeController.text);
+                // },
                 onChanged: (value) {
                   if (value.length == 6) {
                     ref
@@ -124,27 +133,46 @@ class _CodeVerificationState extends ConsumerState<CodeVerification> {
               const SizedBox(
                 height: 10,
               ),
-              Row(children: [
-                Text('¿No recibiste el código? ',
-                    style: textTheme.titleMedium!.copyWith(
-                      color:
-                          const Color.fromARGB(255, 0, 0, 0).withOpacity(0.8),
-                      fontWeight: FontWeight.normal,
-                    )),
-                InkWell(
-                  onTap: () {
-                    ref.read(validateProvider.notifier).auth();
-                  },
-                  child: Text(
-                    'Reenviar',
-                    style: textTheme.titleMedium!.copyWith(
-                        color:
-                            const Color.fromARGB(255, 0, 0, 0).withOpacity(0.8),
-                        fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.underline),
-                  ),
-                )
-              ]),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: !isResendEnabled
+                      ? [
+                          Text(
+                            timeLeft.inSeconds > 0
+                                ? "Reenviar código en: ${formatDuration(timeLeft)}"
+                                : "Código vencido",
+                            style: textTheme.titleLarge!.copyWith(
+                              color: const Color.fromARGB(255, 0, 0, 0)
+                                  .withOpacity(0.8),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        ]
+                      : [
+                          Text('¿No recibiste el código? ',
+                              style: textTheme.titleLarge!.copyWith(
+                                color: const Color.fromARGB(255, 0, 0, 0)
+                                    .withOpacity(0.8),
+                                fontWeight: FontWeight.normal,
+                              )),
+                          InkWell(
+                            onTap: isResendEnabled
+                                ? () {
+                                    ref
+                                        .read(validateProvider.notifier)
+                                        .resend();
+                                  }
+                                : null,
+                            child: Text(
+                              'Reenviar',
+                              style: textTheme.titleLarge!.copyWith(
+                                  color: const Color.fromARGB(255, 0, 0, 0)
+                                      .withOpacity(0.8),
+                                  fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.underline),
+                            ),
+                          )
+                        ]),
 
               const SizedBox(
                 height: 30,
