@@ -109,8 +109,7 @@ class ValidateNotifier
   }
 
   void startCountdown() {
-    ref.read(isResendEnabledProvider.notifier).state =
-        false; // 🔒 Desactivar botón de reenvío
+    ref.read(isResendEnabledProvider.notifier).state = false;
     ref.read(countdownProvider.notifier).state = Duration(minutes: 5);
 
     Timer.periodic(Duration(seconds: 1), (timer) {
