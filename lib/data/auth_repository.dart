@@ -18,6 +18,7 @@ class AuthRepository {
     return await _api.post(currentUrl, user.toJson()).then((value) async {
       await _userService.setLoginUser(
         email: user.email ?? '',
+        name: user.name ?? '',
       );
       if (value.statusCode! >= 200 && value.statusCode! < 300) {
         return CustomResponse(

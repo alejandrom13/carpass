@@ -3,13 +3,14 @@ import 'dart:convert';
 import 'package:carpass/models/auth/login.dart';
 
 enum AuthStatus {
+  signingUp,
   checking,
   authenticated,
   unauthenticated,
   verified,
 }
 
-enum AuthType { password, passwordless, google, none, signUp }
+enum AuthType { password, passwordless, google, none, signUp, login }
 
 class AuthState {
   AuthStatus authStatus;
@@ -60,7 +61,15 @@ class AuthModel {
       case AuthType.password:
         return {"email": email, "password": password};
       case AuthType.passwordless:
-        return {"email": email, "otp": code};
+        return {
+          "email": email,
+          "otp": code,
+        };
+      case AuthType.signUp:
+        return {
+          "name": name,
+          "email": email,
+        };
       default:
         return {"email": email};
     }
