@@ -1,0 +1,38 @@
+name: Sync Fork with Upstream
+
+on:
+  schedule:
+    # This will run the sync every day at midnight UTC.
+    - cron: "0 0 * * *" 
+  workflow_dispatch:  # Allows manual trigger from the Actions tab.
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the forked repository
+      - name: Checkout forked repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Fetches the entire commit history
+
+      # Add the upstream repository as a remote
+      - name: Add upstream remote
+        run: git remote add upstream https://github.com/jannabel/carpass.git
+
+      # Fetch changes from upstream
+      - name: Fetch upstream changes
+        run: git fetch upstream
+
+      # Merge changes from upstream into the main branch
+      - name: Merge upstream changes
+        run: |
+          git checkout main
+          git merge upstream/main
+
+      # Push the changes to your fork
+      - name: Push changes to fork
+        run: git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
